@@ -1,5 +1,7 @@
 package service;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -8,9 +10,9 @@ import java.util.regex.Pattern;
 import utils.Utilities;
 
 public class Parser {
-	public static String parseEnergyData(String jsonString, String index)
+	public static String parseEnergyData(String jsonString, String energySourceIndex)
 	{
-		String data = jsonString.substring(jsonString.indexOf(index));
+		String data = jsonString.substring(jsonString.indexOf(energySourceIndex));
 		List<String> parsedDatasets = new ArrayList<String>();
 		Pattern pattern = Pattern.compile("\\[[^\\[]\\S*?(?=\\]\\})", Pattern.CASE_INSENSITIVE);
 	    Matcher matcher = pattern.matcher(data);
@@ -32,7 +34,10 @@ public class Parser {
 	    	} 
 	    	else 
 	    	{
-	    		System.out.printf("Wert %s GW",parsedDatasets.get(i));
+	    		DecimalFormat df = new DecimalFormat("#,###");
+	    		df.setRoundingMode(RoundingMode.CEILING);
+	    		df.format(Math.round(Float.parseFloat(parsedDatasets.get(i))));
+	    		System.out.printf("Wert %s GW",df.format(Math.round(Float.parseFloat(parsedDatasets.get(i)))));
 	    	}
 	    	
 	    	System.out.print("\n");        

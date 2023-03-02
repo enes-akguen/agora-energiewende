@@ -6,7 +6,7 @@ import java.util.Date;
 public class Utilities {
 	public static String convertTimestamp(String timestamp)
 	{
-		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd H:mm");
 		Date date = new Date(Long.parseLong(timestamp));
 		return sf.format(date);
 	}
