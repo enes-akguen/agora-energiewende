@@ -8,31 +8,31 @@ import java.util.regex.Pattern;
 import utils.Utilities;
 
 public class Parser {
-	public static String parseEnergyData(String jsonString, String startIndex)
+	public static String parseEnergyData(String jsonString, String index)
 	{
-		String wasserKraftData = jsonString.substring(jsonString.indexOf(startIndex));
-		List<String> wasserKraftParsedDatasets = new ArrayList<String>();
+		String data = jsonString.substring(jsonString.indexOf(index));
+		List<String> parsedDatasets = new ArrayList<String>();
 		Pattern pattern = Pattern.compile("\\[[^\\[]\\S*?(?=\\]\\})", Pattern.CASE_INSENSITIVE);
-	    Matcher matcher = pattern.matcher(wasserKraftData);
+	    Matcher matcher = pattern.matcher(data);
 	    
 	    if (matcher.find()) {
 	    	String wasserKraftDatasets = matcher.group(0);
 	    	for (String Dataset : wasserKraftDatasets.split("\\],\\[")) {
 	    		for (String DatasetPart : Dataset.split(",")) {
-		    		wasserKraftParsedDatasets.add(DatasetPart.replaceAll("[\\[\\]]", ""));
+		    		parsedDatasets.add(DatasetPart.replaceAll("[\\[\\]]", ""));
 			    }
 		    }
 		}
 	    
 	    System.out.print("Wasserkraft Daten:\n");
-	    for (int i = 0; i < wasserKraftParsedDatasets.size(); i++) {
+	    for (int i = 0; i < parsedDatasets.size(); i++) {
 	    	if (i % 2 == 0)
 	    	{
-	    		System.out.printf("Datum %s ", Utilities.convertTimestamp(wasserKraftParsedDatasets.get(i)));
+	    		System.out.printf("Datum %s ", Utilities.convertTimestamp(parsedDatasets.get(i)));
 	    	} 
 	    	else 
 	    	{
-	    		System.out.printf("Wert %s GW",wasserKraftParsedDatasets.get(i));
+	    		System.out.printf("Wert %s GW",parsedDatasets.get(i));
 	    	}
 	    	
 	    	System.out.print("\n");        

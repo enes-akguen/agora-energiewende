@@ -1,10 +1,11 @@
 package controller;
 
+import db.Database;
 import service.Api;
 import service.Parser;
 
 /**
- * @author Enes Akgün
+ * @author Enes Akgï¿½n
  */
 public class MainController {
 	/**
@@ -13,17 +14,16 @@ public class MainController {
 	public static void main(String[] args) {
 		Api api = new Api();
 		
-		
 		/**
 		 * Array containing the start and end range of energy sources for regex pattern
 		 * based on API data structure
 		 */
-		final String[][] energySourcesRange = {
+		final String[] energySourcesIndex = {
 //				// Konv. Kraftwerke
 //				{"\\\"name\\\":\\\"Konv. Kraftwerke\\\""
 //						,"]},{\\\"id\\\":\\\"emission-co2\\"},
-				// Wasserkraft
-				{"\\\"name\\\":\\\"Wasserkraft\\\""}
+//				 Wasserkraft
+				"\\\"name\\\":\\\"Wasserkraft\\\"",
 //				// Braunkohle
 //				{"\\\"name\\\":\\\"Braunkohle\\\""
 //					,"]},{\\\"id\\\":\\\"uranium\\\""},
@@ -62,9 +62,8 @@ public class MainController {
 //					,"]},{\\\"id\\\":\\\"coal\\\""}
 		};
 		
-		
-		for (int i = 0; i < energySourcesRange.length; i++) {
-			  Parser.parseEnergyData(api.getJson(), energySourcesRange[i][0]);
+		for (int i = 0; i < energySourcesIndex.length; i++) {
+			  Parser.parseEnergyData(api.getJson(), energySourcesIndex[i]);
 		}
 	}
 }
