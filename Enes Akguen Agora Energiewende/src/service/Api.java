@@ -8,7 +8,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * @author Enes Akgün
+ * @author Enes Akgï¿½n
  */
 public class Api {
 	
@@ -17,10 +17,10 @@ public class Api {
 	/**
 	 * @Todo Make user choose date range
 	 */
-	public Api() 
+	public Api(String startDate, String endDate) 
 	{
 		try {
-			this.url = new URL("https://www.agora-energiewende.de/service/agorameter/chart/data/power_generation/21.11.2022/24.11.2022/today/chart.json");
+			this.url = new URL("https://www.agora-energiewende.de/service/agorameter/chart/data/power_generation/"+startDate+"/"+endDate+"/today/chart.json");
 		} catch (MalformedURLException e) {
 			System.out.print("Invalid URL");
 		}
