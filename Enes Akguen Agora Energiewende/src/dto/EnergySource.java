@@ -50,4 +50,16 @@ public class EnergySource extends AbstractData {
 	public String getAbsoluteEmissions() {
 		return "";
 	}
+
+	@Override
+	public void setEmissionFactor(String emissionFactor) {
+		return;
+		
+	}
+
+	@Override
+	public void setAbsoluteEmissions(String absoluteEmissions) {
+		return;
+		
+	}
 }

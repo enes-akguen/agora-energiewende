@@ -1,8 +1,8 @@
 package dto;
 
 public class EmissionFactor extends AbstractData {
-	private String emissionFactor;
-	private String absoluteEmissions;
+	private String emissionFactor = "";
+	private String absoluteEmissions = "";
 	
 	public EmissionFactor()
 	{
@@ -24,6 +24,7 @@ public class EmissionFactor extends AbstractData {
 		return this.date;
 	}
 	
+	@Override
 	public void setEmissionFactor (String emissionFactor)
 	{
 		this.emissionFactor = emissionFactor;
@@ -35,6 +36,7 @@ public class EmissionFactor extends AbstractData {
 		return this.emissionFactor;
 	}
 	
+	@Override
 	public void setAbsoluteEmissions (String absoluteEmissions)
 	{
 		this.absoluteEmissions = absoluteEmissions;

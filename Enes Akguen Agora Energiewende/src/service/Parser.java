@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import dto.AbsoluteEmission;
 import dto.AbstractData;
 import dto.EmissionFactor;
 import dto.EnergySource;
@@ -55,7 +56,11 @@ public class Parser {
 	
 	private ArrayList<AbstractData> abstractData = new ArrayList<AbstractData>();
 	
-	private EmissionFactor emissionFactor = new EmissionFactor();
+	private EmissionFactor emissionFactor;
+	
+	private AbsoluteEmission absoluteEmission;
+	
+	private EnergySource parsedData;
 	
 	public Parser(String jsonString)
 	{
@@ -78,8 +83,6 @@ public class Parser {
 		List<String> parsedDatasets = new ArrayList<String>();
 		Pattern pattern = Pattern.compile("\\[[^\\[]\\S*?(?=\\]\\})", Pattern.CASE_INSENSITIVE);
 	    Matcher matcher = pattern.matcher(data);
-	    EnergySource parsedData = new EnergySource();
-	    parsedData.setName(energySourceName);
 	    
 	    if (matcher.find()) {
 	    	String wasserKraftDatasets = matcher.group(0);
@@ -91,15 +94,27 @@ public class Parser {
 		}
 
 	    for (int i = 0; i < parsedDatasets.size(); i++) {
+	    	if (!(this.parsedData instanceof EnergySource)) {
+	    		this.parsedData = new EnergySource();
+	    		this.parsedData.setName(energySourceName);
+	    	} 
+	    	if (!(this.emissionFactor instanceof EmissionFactor)) {
+	    		this.emissionFactor = new EmissionFactor();
+	    	}
+	    	if (!(this.absoluteEmission instanceof AbsoluteEmission)) {
+	    		this.absoluteEmission = new AbsoluteEmission();
+	    	} 
 	    	if (i % 2 == 0)
 	    	{
 	    		if (!energySourceName.equals("CO2-Emissionsfaktor des Strommix") &&
     				!energySourceName.equals("Emissionen der Stromerzeugung"))
 	    		{
-	    			parsedData.setDate(Utilities.convertTimestamp(parsedDatasets.get(i)));
+	    			this.parsedData.setDate(Utilities.convertTimestamp(parsedDatasets.get(i)));
+	    			
 	    		} else 
 	    		{
 	    			this.emissionFactor.setDate(Utilities.convertTimestamp(parsedDatasets.get(i)));
+	    			this.absoluteEmission.setDate(Utilities.convertTimestamp(parsedDatasets.get(i)));
 	    		}
 	    	} 
 	    	else 
@@ -109,15 +124,20 @@ public class Parser {
 	    	    df.format(Math.round(Float.parseFloat(parsedDatasets.get(i))));
 			    if (energySourceName.equals("CO2-Emissionsfaktor des Strommix"))
 	 		    {
-			    	this.emissionFactor.setEmissionFactor(df.format(Math.round(Float.parseFloat(parsedDatasets.get(i)))));
+		    		this.emissionFactor.setEmissionFactor(df.format(Math.round(Float.parseFloat(parsedDatasets.get(i)))) + " g/kWh");
+		    		this.abstractData.add(emissionFactor);
+		    		this.emissionFactor = null;
 	 		    } else if (energySourceName.equals("Emissionen der Stromerzeugung")) {
-	 		    	this.emissionFactor.setAbsoluteEmissions(df.format(Math.round(Float.parseFloat(parsedDatasets.get(i)))));
+ 		    		this.absoluteEmission.setAbsoluteEmissions(df.format(Math.round(Float.parseFloat(parsedDatasets.get(i)))) + " t");
+ 		    		this.abstractData.add(absoluteEmission);
+		    		this.absoluteEmission = null;
 	    	    }
 	 		    else {
-	 		    	parsedData.setEnergy(df.format(Math.round(Float.parseFloat(parsedDatasets.get(i)))));
+	 		    	this.parsedData.setEnergy(df.format(Math.round(Float.parseFloat(parsedDatasets.get(i)))) + " GW");
 	 		    	this.abstractData.add(parsedData);
+	 		    	this.parsedData = null;
 	 		    }
-	    	}      
+	    	}
 	    }
 	}
 }
