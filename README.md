@@ -2,7 +2,7 @@
 
 ## Anleitung für die Ausführung
 - Laden Sie bitte zunächst das Projekt herunter.
-- Zum Persistieren der Daten wird eine Verbindung zu einer Datenbank benötigt. Um die lokale Datenbank verfügbar zu machen, muss XAMPP verwendet werden..
+- Zum Persistieren der Daten wird eine Verbindung zu einer Datenbank benötigt. Um die lokale Datenbank verfügbar zu machen, muss XAMPP verwendet werden.
 - Die lokale Datenbank muss die Tabelle mit dem Namen "agora_energiewende" und die dazugehörigen Tabellenstrukturen beinhalten. Im Projekt befindet sich eine
 .sql Datei, die importiert werden kann, um die notwendige Datenbankstruktur herzustellen.
 - Anschließend kann die Controller-Klasse ausgeführt werden, um das Programm zu starten.
