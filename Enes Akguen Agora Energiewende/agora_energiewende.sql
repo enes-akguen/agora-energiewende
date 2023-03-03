@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Datenbank: `agora_energiewende`
 --
+CREATE DATABASE `agora_energiewende`; 
+USE `agora_energiewende`;
 
 -- --------------------------------------------------------
 
